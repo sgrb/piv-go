@@ -137,6 +137,7 @@ type client struct {
 	//
 	// If nil, defaults to crypto.Rand.
 	Rand io.Reader
+    Shared bool
 }
 
 func (c *client) Cards() ([]string, error) {
@@ -154,7 +155,7 @@ func (c *client) Open(card string) (*YubiKey, error) {
 		return nil, fmt.Errorf("connecting to smart card daemon: %w", err)
 	}
 
-	h, err := ctx.Connect(card)
+	h, err := ctx.Connect(card, c.Shared)
 	if err != nil {
 		ctx.Close()
 		return nil, fmt.Errorf("connecting to smart card: %w", err)

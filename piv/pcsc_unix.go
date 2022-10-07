@@ -92,13 +92,19 @@ type scHandle struct {
 	h C.SCARDHANDLE
 }
 
-func (c *scContext) Connect(reader string) (*scHandle, error) {
+func (c *scContext) Connect(reader string, shared bool) (*scHandle, error) {
 	var (
 		handle         C.SCARDHANDLE
 		activeProtocol C.DWORD
 	)
+
+    var mode C.ulong = C.SCARD_SHARE_EXCLUSIVE
+    if shared {
+        mode = C.SCARD_SHARE_SHARED
+    }
+
 	rc := C.SCardConnect(c.ctx, C.CString(reader),
-		C.SCARD_SHARE_EXCLUSIVE, C.SCARD_PROTOCOL_T1,
+		mode, C.SCARD_PROTOCOL_T1,
 		&handle, &activeProtocol)
 	if err := scCheck(rc); err != nil {
 		return nil, err
