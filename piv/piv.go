@@ -51,7 +51,7 @@ var (
 //
 // See: https://ludovicrousseau.blogspot.com/2010/05/what-is-in-pcsc-reader-name.html
 func Cards() ([]string, error) {
-	var c client
+	var c Client
 	return c.Cards()
 }
 
@@ -127,13 +127,13 @@ func (yk *YubiKey) Close() error {
 
 // Open connects to a YubiKey smart card.
 func Open(card string) (*YubiKey, error) {
-	var c client
+	var c Client
 	return c.Open(card)
 }
 
-// client is a smart card client and may be exported in the future to allow
+// Client is a smart card Client and may be exported in the future to allow
 // configuration for the top level Open() and Cards() APIs.
-type client struct {
+type Client struct {
 	// Rand is a cryptographic source of randomness used for card challenges.
 	//
 	// If nil, defaults to crypto.Rand.
@@ -141,7 +141,7 @@ type client struct {
     Shared bool
 }
 
-func (c *client) Cards() ([]string, error) {
+func (c *Client) Cards() ([]string, error) {
 	ctx, err := newSCContext()
 	if err != nil {
 		return nil, fmt.Errorf("connecting to pcsc: %w", err)
@@ -150,7 +150,7 @@ func (c *client) Cards() ([]string, error) {
 	return ctx.ListReaders()
 }
 
-func (c *client) Open(card string) (*YubiKey, error) {
+func (c *Client) Open(card string) (*YubiKey, error) {
 	ctx, err := newSCContext()
 	if err != nil {
 		return nil, fmt.Errorf("connecting to smart card daemon: %w", err)
