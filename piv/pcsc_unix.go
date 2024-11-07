@@ -98,10 +98,10 @@ func (c *scContext) Connect(reader string, shared bool) (*scHandle, error) {
 		activeProtocol C.DWORD
 	)
 
-    var mode C.ulong = C.SCARD_SHARE_EXCLUSIVE
-    if shared {
-        mode = C.SCARD_SHARE_SHARED
-    }
+	var mode C.ulong = C.SCARD_SHARE_EXCLUSIVE
+	if shared {
+		mode = C.SCARD_SHARE_SHARED
+	}
 
 	rc := C.SCardConnect(c.ctx, C.CString(reader),
 		mode, C.SCARD_PROTOCOL_T1,

@@ -137,7 +137,7 @@ type Client struct {
 	// Rand is a cryptographic source of randomness used for card challenges.
 	//
 	// If nil, defaults to crypto.Rand.
-	Rand io.Reader
+	Rand   io.Reader
 	Shared bool
 }
 
