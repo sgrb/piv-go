@@ -131,7 +131,7 @@ func Open(card string) (*YubiKey, error) {
 	return c.Open(card)
 }
 
-// Client is a smart card Client and may be exported in the future to allow
+// Client is a smart card client and may be exported in the future to allow
 // configuration for the top level Open() and Cards() APIs.
 type Client struct {
 	// Rand is a cryptographic source of randomness used for card challenges.
