@@ -138,7 +138,7 @@ type Client struct {
 	//
 	// If nil, defaults to crypto.Rand.
 	Rand io.Reader
-    Shared bool
+	Shared bool
 }
 
 func (c *Client) Cards() ([]string, error) {
